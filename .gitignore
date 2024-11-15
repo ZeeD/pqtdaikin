@@ -1,0 +1,10 @@
+/.coverage
+/.dmypy.json
+/.git/
+/.mypy_cache/
+/.pdm-python
+/.ruff_cache/
+/.venv/
+
+/*/*.egg-info/
+/**/__pycache__/
