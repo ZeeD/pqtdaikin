@@ -15,9 +15,11 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = [ "pyside6==6.7.*" ]
+dependencies = [ "pyside6==6.7.*", "python-fasthtml>=0.10" ]
 urls.Homepage = "https://github.com/ZeeD/pqtdaikin"
 urls.Repository = "https://github.com/ZeeD/pqtdaikin.git"
+scripts.webdaikin = "webdaikin.main:main"
+
 gui-scripts.pqtdaikin = "pqtdaikin.main:main"
 
 [dependency-groups]
@@ -34,7 +36,9 @@ lint = { composite = [
     "ruff check --exit-zero .",
     "dmypy run .",
 ] }
-start = 'pqtdaikin'
+start = 'start-web'
+start-pqt = 'pqtdaikin'
+start-web = 'webdaikin'
 
 [tool.ruff]
 line-length = 80
