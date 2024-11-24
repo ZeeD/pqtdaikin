@@ -15,7 +15,7 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = [ "pyside6==6.7.*", "python-fasthtml>=0.10" ]
+dependencies = [ "ludic[full]>=0.5.2", "pyside6==6.7.*", "uvicorn>=0.32.1" ]
 urls.Homepage = "https://github.com/ZeeD/pqtdaikin"
 urls.Repository = "https://github.com/ZeeD/pqtdaikin.git"
 scripts.webdaikin = "webdaikin.main:main"
@@ -36,7 +36,7 @@ lint = { composite = [
     "ruff check --exit-zero .",
     "dmypy run .",
 ] }
-start = 'start-web'
+start = 'webdaikin'
 start-pqt = 'pqtdaikin'
 start-web = 'webdaikin'
 
