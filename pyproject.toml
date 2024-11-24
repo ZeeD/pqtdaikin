@@ -15,7 +15,13 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = [ "ludic[full]>=0.5.2", "pyside6==6.7.*", "uvicorn>=0.32.1" ]
+dependencies = [
+    "httpx>=0.27.2",
+    "ludic[full]>=0.5.2",
+    "pyside6==6.7.*",
+    "python-dotenv>=1.0.1",
+    "uvicorn>=0.32.1",
+]
 urls.Homepage = "https://github.com/ZeeD/pqtdaikin"
 urls.Repository = "https://github.com/ZeeD/pqtdaikin.git"
 scripts.webdaikin = "webdaikin.main:main"

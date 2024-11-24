@@ -15,3 +15,6 @@
 
 /*/*.egg-info/
 /*/__pycache__/
+
+/_wildcard.local+3-key.pem
+/_wildcard.local+3.pem
