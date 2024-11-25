@@ -9,11 +9,13 @@ from httpx import AsyncClient
 from httpx import Auth
 from httpx import Request as httpx_Request
 from httpx import Response as httpx_Response
+from httpx import codes
 from ludic.catalog.buttons import ButtonSuccess
-from ludic.catalog.layouts import Cluster
 from ludic.catalog.pages import Body
 from ludic.catalog.pages import Head
 from ludic.catalog.pages import HtmlPage
+from ludic.components import Block
+from ludic.components import Inline
 from ludic.web import LudicApp
 from ludic.web import Request
 from starlette.responses import RedirectResponse
@@ -93,13 +95,15 @@ async def index(request: Request) -> 'BaseComponent|Response':
     on_off_mode: Literal['on', 'off'] | None = None
 
     for gateway_device in gateway_devices:
-        gateway_device_id = gateway_device['id']
         for management_point in gateway_device['managementPoints']:
             if management_point['embeddedId'] != EMBEDDED_ID:
                 continue
-            on_off_mode = management_point['onOffMode']['value']
             if management_point['name']['value'] == SOGGIORNO:
+                gateway_device_id = gateway_device['id']
+                on_off_mode = management_point['onOffMode']['value']
                 break
+        if gateway_device_id is not None and on_off_mode is not None:
+            break
 
     if gateway_device_id is None or on_off_mode is None:
         raise ValueError
@@ -116,11 +120,11 @@ async def index(request: Request) -> 'BaseComponent|Response':
 def render_on_off_mode(
     gateway_device_id: str, on_off_mode: str
 ) -> 'BaseComponent':
-    return Cluster(
-        'DaikinAP13459 - sogg',
-        on_off_mode,
-        'gateway_device_id',
-        gateway_device_id,
+    return Block(
+        Inline('DaikinAP13459 - sogg'),
+        Inline(on_off_mode),
+        Inline('gateway_device_id'),
+        Inline(gateway_device_id),
         ButtonSuccess(
             'toggle',
             hx_post=app.url_path_for(
@@ -146,11 +150,9 @@ async def toggle_on_off_mode(
             auth=BearerToken(ACCESS_TOKEN),
             json={'value': on_off_mode},
         )
-    print(f'{r.status_code=}')
-    if r.status_code != 204:
+    if r.status_code != codes.NO_CONTENT:
         raise ValueError(r.json())
     return render_on_off_mode(gateway_device_id, on_off_mode)
-
 
 
 def main() -> None:
