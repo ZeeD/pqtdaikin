@@ -21,8 +21,6 @@ dependencies = [
     "pyside6==6.7.*",
     "python-dotenv>=1.0.1",
     "uvicorn>=0.32.1",
-    "jdk4py>=21.0.4.1",
-    "openapi-generator-cli>=4.3.1",
 ]
 urls.Homepage = "https://github.com/ZeeD/pqtdaikin"
 urls.Repository = "https://github.com/ZeeD/pqtdaikin.git"
@@ -31,7 +29,12 @@ scripts.webdaikin = "webdaikin.main:main"
 gui-scripts.pqtdaikin = "pqtdaikin.main:main"
 
 [dependency-groups]
-dev = [ "mypy>=1.13", "pyproject-fmt>=2.5", "ruff>=0.7.1" ]
+dev = [
+    "mypy>=1.13",
+    "openapi-generator-cli[jdk4py]>=7.10.0.post0",
+    "pyproject-fmt>=2.5",
+    "ruff>=0.7.1",
+]
 
 [tool.pdm]
 distribution = true
@@ -42,11 +45,14 @@ lint = { composite = [
     "pyproject-fmt pyproject.toml",
     "ruff format .",
     "ruff check --exit-zero .",
-    "dmypy run .",
+    "mypy run .",
 ] }
-start = 'webdaikin'
-start-pqt = 'pqtdaikin'
-start-web = 'webdaikin'
+start = "webdaikin"
+start-pqt = "pqtdaikin"
+start-web = "webdaikin"
+generate-daikin-client = { composite = [
+    "openapi-generator-cli generate -g python -i daikin-openapi.json  -o tmp",
+] }
 
 [tool.ruff]
 line-length = 80
