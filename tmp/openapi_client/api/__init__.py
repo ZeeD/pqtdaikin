@@ -7,4 +7,3 @@ from openapi_client.api.holiday_mode_api import HolidayModeApi
 from openapi_client.api.info_api import InfoApi
 from openapi_client.api.schedule_api import ScheduleApi
 from openapi_client.api.site_api import SiteApi
-
